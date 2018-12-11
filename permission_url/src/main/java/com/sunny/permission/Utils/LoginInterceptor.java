@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.lang.reflect.InvocationHandler;
 import java.net.URL;
 
-@Component
+/*@Component*/
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
