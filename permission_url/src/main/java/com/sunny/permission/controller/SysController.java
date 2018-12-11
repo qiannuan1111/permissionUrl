@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 
@@ -24,9 +23,8 @@ public class SysController {
      * @param password
      * @return
      */
-    @RequestMapping("/login")
-    @ResponseBody
-    public String login(HttpSession session,String randomcode,String usercode,String password){
+    @RequestMapping(value = "/login")
+    public String login(HttpSession session,String usercode,String password){
         //从session中获取验证码，防止恶意攻击
        /*  String validate = session.getAttribute("validate").toString();
         if(!StringUtils.equals(randomcode,validate)){
@@ -39,7 +37,7 @@ public class SysController {
     }
 
     @RequestMapping("/logintest")
-    public String loginTest(String usercode,String password){
+    public String loginTest(@RequestParam(value = "usercode") String usercode,@RequestParam(value = "password") String password){
         System.out.println(usercode);
         System.out.println(password);
         return  "redirect:/first.html";

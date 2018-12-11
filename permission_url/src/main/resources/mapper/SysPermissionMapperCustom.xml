@@ -10,7 +10,7 @@
 
 </select>
 
-    <select id="findPermissionByUserId">
+    <select id="findPermissionByUserId" parameterType="String" resultType="com.sunny.permission.entry.SysPermission">
      SELECT * FROM sys_permission WHERE TYPE = 'permission' AND id IN
 
 (SELECT sys_permission_id FROM sys_role_permission WHERE sys_role_id IN
