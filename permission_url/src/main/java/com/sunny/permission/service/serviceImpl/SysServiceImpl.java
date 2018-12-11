@@ -2,9 +2,11 @@ package com.sunny.permission.service.serviceImpl;
 
 import com.sunny.permission.Utils.MD5;
 import com.sunny.permission.entry.ActiveUser;
+import com.sunny.permission.entry.SysPermission;
 import com.sunny.permission.entry.SysUser;
 import com.sunny.permission.entry.SysUserExample;
 import com.sunny.permission.exception.BaseException;
+import com.sunny.permission.mapper.SysPermissionMapperCustom;
 import com.sunny.permission.mapper.SysUserMapper;
 import com.sunny.permission.service.SysService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ import java.util.List;
 public class SysServiceImpl implements SysService {
     @Autowired
     private SysUserMapper sysUserMapper;
+    @Autowired
+    private SysPermissionMapperCustom sysPermissionMapperCustom;
 
     @Override
     public ActiveUser authenticat(String usercode, String password) {
@@ -32,10 +36,15 @@ public class SysServiceImpl implements SysService {
         if (password_db.equalsIgnoreCase(md5ofstr)){
             throw  new BaseException("密码错误");
         }
+        String userId = sysUser.getId();
+        List<SysPermission> menuListByUserId = this.findMenuListByUserId(userId);
+        List<SysPermission> permissionByUserId = this.findPermissionByUserId(userId);
         ActiveUser activeUser = new ActiveUser();
         activeUser.setId(sysUser.getId());
         activeUser.setUsername(sysUser.getUsername());
         activeUser.setUsername(usercode);
+        activeUser.setMenus(menuListByUserId);
+        activeUser.setPermissions(permissionByUserId);
         return activeUser;
     }
 
@@ -52,6 +61,16 @@ public class SysServiceImpl implements SysService {
             return null;
         }
         return sysUsers.get(0);
+    }
+
+    @Override
+    public List<SysPermission> findMenuListByUserId(String userId) {
+        return sysPermissionMapperCustom.findMenuListByUserId(userId);
+    }
+
+    @Override
+    public List<SysPermission> findPermissionByUserId(String userId) {
+        return sysPermissionMapperCustom.findPermissionByUserId(userId);
     }
 
     private SysUserExample getSysUserExample(String usercode) {

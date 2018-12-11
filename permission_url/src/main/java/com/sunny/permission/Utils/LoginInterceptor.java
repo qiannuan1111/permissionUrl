@@ -23,7 +23,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         //实际开发中需要将公开地址配置在配置文件中
         //从配置文件中取出可以匿名访问的URL
         //URL anonymousURL = ResourceUtils.getURL("anonymousURL");
-        if(requestURI.contains("login.action")){
+        if(requestURI.contains("login.html")){
             return true;
         }
         HttpSession session = request.getSession();

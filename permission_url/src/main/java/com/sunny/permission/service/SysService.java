@@ -1,7 +1,10 @@
 package com.sunny.permission.service;
 
 import com.sunny.permission.entry.ActiveUser;
+import com.sunny.permission.entry.SysPermission;
 import com.sunny.permission.entry.SysUser;
+
+import java.util.List;
 
 public interface SysService {
 
@@ -18,4 +21,11 @@ public interface SysService {
      * 根据用户在行号查询用户信息
      */
     public SysUser findSysUserByUsercode(String usercode);
+
+    /**
+     * 获取拥有menu权限的用户
+     */
+    public List<SysPermission> findMenuListByUserId(String userId);
+
+    public List<SysPermission> findPermissionByUserId(String  userId);
 }
